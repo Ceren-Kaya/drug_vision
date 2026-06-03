@@ -1,0 +1,2 @@
+Top-1 Accuracy: 0.900500
+Top-3 Accuracy: 0.977000

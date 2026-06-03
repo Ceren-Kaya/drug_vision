@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drug Vision - Metrics</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card wide-card">
+      <div class="topbar">
+        <div>
+          <h1>Metrics & Figures</h1>
+          <p>Model metrikleri, sınıflandırma raporu ve görseller.</p>
+        </div>
+        <div class="nav-buttons">
+          <a class="nav-btn secondary" href="/">Prediction</a>
+          <a class="nav-btn" href="/metrics">Metrics & Figures</a>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h2>Test Metrics</h2>
+          <pre>{{ metrics }}</pre>
+        </div>
+
+        <div class="metric-card">
+          <h2>Top-K Metrics</h2>
+          <pre>{{ topk }}</pre>
+        </div>
+
+        <div class="metric-card full">
+          <h2>Classification Report</h2>
+          <pre>{{ report }}</pre>
+        </div>
+
+        <div class="metric-card full">
+          <h2>Hard Cases</h2>
+          <pre>{{ hard_cases }}</pre>
+        </div>
+      </div>
+
+      <div class="figure-grid">
+        {% for fig in figures %}
+        <div class="figure-card figure-clickable"
+             onclick="openFigureModal('{{ fig.path }}', '{{ fig.title }}')">
+          <h3>{{ fig.title }}</h3>
+          <img src="{{ fig.path }}" alt="{{ fig.title }}">
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div id="figureModal" class="figure-modal" onclick="closeFigureModal(event)">
+    <div class="figure-modal-content">
+      <button class="figure-modal-close" onclick="closeFigureModal(event)">×</button>
+      <h3 id="figureModalTitle"></h3>
+      <img id="figureModalImg" src="" alt="Expanded figure">
+    </div>
+  </div>
+
+  <script>
+    function openFigureModal(imgSrc, title) {
+      const modal = document.getElementById("figureModal");
+      const modalImg = document.getElementById("figureModalImg");
+      const modalTitle = document.getElementById("figureModalTitle");
+
+      modalImg.src = imgSrc;
+      modalTitle.textContent = title;
+      modal.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeFigureModal(event) {
+      const modal = document.getElementById("figureModal");
+      const content = modal.querySelector(".figure-modal-content");
+
+      if (
+        event.target === modal ||
+        event.target.classList.contains("figure-modal-close")
+      ) {
+        modal.classList.remove("show");
+        document.body.style.overflow = "";
+      }
+    }
+
+    document.addEventListener("keydown", function(event) {
+      if (event.key === "Escape") {
+        const modal = document.getElementById("figureModal");
+        modal.classList.remove("show");
+        document.body.style.overflow = "";
+      }
+    });
+  </script>
+</body>
+</html>

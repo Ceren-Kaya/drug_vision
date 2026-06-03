@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Drug Vision</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div>
+          <h1>Drug Vision</h1>
+          <p>Bir ilaç görseli yükle, model tahmin etsin.</p>
+        </div>
+        <div class="nav-buttons">
+          <a class="nav-btn secondary" href="/">Prediction</a>
+          <a class="nav-btn" href="/metrics">Metrics & Figures</a>
+        </div>
+      </div>
+
+      <form action="/predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept="image/*" required />
+        <button type="submit">Tahmin Et</button>
+      </form>
+
+      {% if error %}
+        <div class="result error-box">
+          <b>Hata:</b> {{ error }}
+        </div>
+      {% endif %}
+
+      {% if result %}
+      <div class="result">
+        <div class="row">
+          <div>
+            <div class="imgbox">
+              <img src="data:image/png;base64,{{ result.image_b64 }}" alt="Processed image" />
+            </div>
+            <div class="meta">İşlenmiş Görsel: 224×224</div>
+          </div>
+
+          <div>
+            <div class="label">Tahmin: {{ result.pred_label }}</div>
+            <div class="bar">
+              <div class="bar-fill" style="--bar-width: {{ result.bar_width }}%;"></div>
+            </div>
+            <div class="meta">Güven Oranı: <b>{{ result.confidence_pct }}%</b></div>
+            <div class="meta">Inference Time: <b>{{ result.latency_ms }} ms</b></div>
+            <div class="meta">Sınıf ID: {{ result.pred_idx }}</div>
+
+            <div class="meta top3">
+              <b>Top-3 Tahmin</b>
+              <ul>
+                {% for item in result.top3_preds %}
+                  <li>{{ item.label }} — {{ item.confidence }}%</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="hint">
+        Not: En iyi sonuç için tek ürün, net ışık ve mümkünse yakın plan kullan.
+      </div>
+    </div>
+  </div>
+</body>
+</html>

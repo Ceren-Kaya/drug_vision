@@ -1,0 +1,6 @@
+Most Confused Pairs (True -> Pred):
+1) Biogesic -> Kremil S : 18
+2) Bioflu -> Neozep : 17
+3) Neozep -> Bioflu : 12
+4) Biogesic -> Bactidol : 12
+5) DayZinc -> Fish Oil : 10
