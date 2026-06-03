@@ -1,6 +1,6 @@
-# Drug Vision – Image-Based Drug Classification
+# Drug Vision – Image-Based Drug (Medicine) Classification
 
-A deep learning project that classifies drug types from images using transfer learning with MobileNetV2.
+A deep learning project that classifies drug(medicine) types from images using transfer learning with MobileNetV2.
 
 ---
 
@@ -136,6 +136,7 @@ Fast inference on CPU:
 ~30–50 ms per image (hardware dependent)
 
 ### Project Structure
+```text
 Drug Vision/
 │
 ├── outputs/
@@ -157,7 +158,7 @@ Drug Vision/
 ├── templates/
 ├── static/
 └── README.md
-
+```
 ### Disclaimer
 
 This project is for educational purposes only.
